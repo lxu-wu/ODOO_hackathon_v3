@@ -1,16 +1,15 @@
 import { useState, useEffect } from 'react'
 import './App.css'
-import config from './config.js';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import * as signalR from '@microsoft/signalr';
 import MainPage from './component/MainPage.jsx';
-import GamePage from './component/GamePage.jsx';
+import LobbyPage from './component/LobbyPage.jsx';
 
 const EVENT_PARTY_CREATED = "PartyCreated";
 const EVENT_PARTY_JOINED = "PartyJoined";
 import VideoRecorder from './component/VideoRecorder.jsx';
-import home from './component/home'
-import jeu from './component/jeu'
+import ChooseGamePage from './component/ChooseGamePage.jsx'
+import { NotFoundPage } from './component/NotFoundPage.jsx';
 
 function App() {
 
@@ -49,11 +48,11 @@ function App() {
   const joinParty = async (nav, partyId, username) => {
     connection.on(EVENT_PARTY_JOINED, (_) => {
       console.log("Party joined: " + partyId);
-      nav("/" + partyId);
+      nav("/lobby/" + partyId);
     });
 
     try {
-      await connection.invoke("JoinParty", username);
+      await connection.invoke("JoinParty", partyId, username);
     } catch (error) {
       console.error('Error joining party:', error);
     }
@@ -62,7 +61,7 @@ function App() {
   const createParty = async (nav, username) => {
     connection.on(EVENT_PARTY_CREATED, (partyId) => {
       console.log("Party created: " + partyId);
-      nav("/" + partyId);
+      nav("/lobby/" + partyId);
     });
 
     try {
@@ -76,8 +75,11 @@ function App() {
     <Router>
       <Routes>
         <Route path="/" element={<MainPage createParty={createParty} joinParty={joinParty} />}/>
-        <Route path="/:id" element={<GamePage players={players}/>}/>
+        <Route path="/choose-game" element={<ChooseGamePage />} />
         <Route path="/video" elementt={<VideoRecorder />}/>
+        <Route path="/lobby/:id" element={<LobbyPage players={players}/>}/>
+        <Route path="/404" element={<NotFoundPage/>}/>
+        <Route path="*" element={<Navigate to="/" />} />
       </Routes>
     </Router>
   )

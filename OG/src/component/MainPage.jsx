@@ -12,10 +12,9 @@ const MainPage = ({ createParty, joinParty }) => {
     joinParty(nav, party_id, username);
   };
 
-  const _createParty = () => {
+  const choose_game = () => {
     const username = document.getElementById("pseudo_create").value;
-
-    createParty(nav, username);
+    nav("/choose-game");
   };
 
   return (
@@ -46,7 +45,7 @@ const MainPage = ({ createParty, joinParty }) => {
             <input type="text" placeholder='Pseudo' id='pseudo_create' className='pseudo'/>
 
             <div>
-              <button id='join' onClick={_createParty}>Créer un Tournoi</button>
+              <button id='join' onClick={choose_game}>Créer un Tournoi</button>
             </div>
           </div>
         </div>
