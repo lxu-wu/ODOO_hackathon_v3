@@ -134,10 +134,10 @@ input{
   flex-direction: column;
   width: 50vh;
     height: 50vh;
-  background-color: yellow;}
+  background-color: rgb(112, 112, 98);}
   .joueur-liste{
     color: black;
-    background-color: blue;
+    background-color: rgba(0, 0, 255, 0.689);
     width: 33vh;
     height: 50vh;
   }
