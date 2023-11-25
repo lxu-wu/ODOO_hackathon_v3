@@ -8,12 +8,13 @@ function App() {
   const [count, setCount] = useState(0)
 
   return (
-    <>   
-        <div>
+    <  ><body>
+       <div className='card'> 
+      <div >
           <img className='logo' src="../public/olymp-logo.jpg" alt="" />
         </div>
         <div>
-          <img src="../public/user972.png" alt="" className='usericon' />
+         
       
           <input type="text" placeholder='Pseudo' id='pseudo' />
         </div>
@@ -24,7 +25,10 @@ function App() {
         </div>
         <div>
           <button>Creer un tournoi</button>
-        </div>
+        </div></div>  
+       
+    </body>
+   
      
      
     </>
