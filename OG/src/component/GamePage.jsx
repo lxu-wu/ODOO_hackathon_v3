@@ -10,15 +10,14 @@ const GamePage = ({ players }) => {
     return (
         <>
             <div className="card2">
-                <div className="joueur-liste"><h3>liste des participants</h3>
-                <div>
+                <div className="joueur-liste">
+                <h5>Liste des participants :</h5>
                 {players.map((player, index) => (
-                        <div key={index}>{player.username}</div>
-                    ))}</div>
+                        <div className={index}>{player.username}</div>
+                    ))}
                 </div>
-
                 <div className="column-home">
-
+                    
                 </div>
             </div>
         </>
