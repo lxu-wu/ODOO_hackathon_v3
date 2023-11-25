@@ -9,9 +9,18 @@ export function GamePage() {
 
     useEffect(() => {
         if (connection) {
-            connection.on("ReceivePlayers", (receivedPlayers) => {
+            const handleReceivePlayers = (receivedPlayers) => {
+                receivedPlayers.forEach(element => {
+                    console.log(element);
+                })
                 setPlayers(receivedPlayers);
-            })
+            };
+    
+            connection.on("ReceivePlayers", handleReceivePlayers);
+    
+            return () => {
+                connection.off("ReceivePlayers", handleReceivePlayers);
+            };
         }
     }, [])
 
@@ -19,11 +28,9 @@ export function GamePage() {
         <>
             <p>{id}</p>
             <h2>Liste des joueurs connectés :</h2>
-            <ul>
-                {players.map((player) => (
-                <li>{player.username}</li>
-                ))}
-            </ul>
+            {players.map((player, index) => (
+                <p key={index}>{player.username}</p>
+            ))}
         </>
     );
 }
