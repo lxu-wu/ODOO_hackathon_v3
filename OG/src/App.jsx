@@ -3,36 +3,24 @@ import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { MainPage } from './component/mainPage'
+import {
+  BrowserRouter, Routes, Route, Switch,
+} from 'react-router-dom';
 
 function App() {
   const [count, setCount] = useState(0)
 
-  return (
-    <  ><body>
-       <div className='card'> 
-      <div >
-          <img className='logo' src="../public/olymp-logo.jpg" alt="" />
-        </div>
-        <div>
-         
-      
-          <input type="text" placeholder='Pseudo' id='pseudo' />
-        </div>
-        <div>
-          <button id='join'>Rejoindre</button>
 
-          
-        </div>
-        <div>
-          <button>Creer un tournoi</button>
-        </div></div>  
-       
-    </body>
-   
-     
-     
-    </>
-  )
+    return (
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" Component={mainPage} />
+            <Route path='/Video' Component={Video} />
+          </Routes>
+        </BrowserRouter>
+      )
+
 }
 
 export default App
