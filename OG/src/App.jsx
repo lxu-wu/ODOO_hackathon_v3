@@ -4,7 +4,7 @@ import config from './config.js';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import * as signalR from '@microsoft/signalr';
 import MainPage from './component/MainPage.jsx';
-import GamePage from './component/GamePage.jsx';
+import GamePage from './component/LobbyPage.jsx';
 
 const EVENT_PARTY_CREATED = "PartyCreated";
 const EVENT_PARTY_JOINED = "PartyJoined";
@@ -50,11 +50,11 @@ function App() {
   const joinParty = async (nav, partyId, username) => {
     connection.on(EVENT_PARTY_JOINED, (_) => {
       console.log("Party joined: " + partyId);
-      nav("/join/" + partyId);
+      nav("/lobby/" + partyId);
     });
 
     try {
-      await connection.invoke("JoinParty", username);
+      await connection.invoke("JoinParty", partyId, username);
     } catch (error) {
       console.error('Error joining party:', error);
     }
@@ -63,7 +63,7 @@ function App() {
   const createParty = async (nav, username) => {
     connection.on(EVENT_PARTY_CREATED, (partyId) => {
       console.log("Party created: " + partyId);
-      nav("/join/" + partyId);
+      nav("/lobby/" + partyId);
     });
 
     try {
@@ -79,9 +79,9 @@ function App() {
         <Route path="/" element={<MainPage createParty={createParty} joinParty={joinParty} />}/>
         <Route path="/game" element={<jeu />} />
         <Route path="/video" elementt={<VideoRecorder />}/>
-        <Route path="/join/:id" element={<GamePage players={players}/>}/>
+        <Route path="/lobby/:id" element={<GamePage players={players}/>}/>
         <Route path="/404" element={<NotFoundPage/>}/>
-        <Route path="*" element={<Navigate to="/404" />} />
+        <Route path="*" element={<Navigate to="/" />} />
       </Routes>
     </Router>
   )

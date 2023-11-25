@@ -8,30 +8,32 @@ const GamePage = ({ players }) => {
 
     const nav = useNavigate();
 
-    players.forEach(element => {
-        console.log("Item: " + element);
-    });
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const response = await fetch(`${config.baseUrl}/api/party/exists?id=${id}`);
 
-    useEffect(async () => {
-        await fetch(config.baseUrl + "/api/party/exists?id=" + id)
-            .then(async response => {
                 if (!response.ok) {
                     console.error(response.status);
                     return;
                 }
 
                 const data = await response.json();
-                const boolean = !!data;
+                const booleanValue = !!data;
 
-                if (!boolean){
-                    nav("/");
+                if (!booleanValue) {
+                    nav('/404');
                 }
-            });
+            } catch (error) {
+                console.error('Erreur pendant la récupération des données :', error);
+            }
+        };
+
+        fetchData();
 
         return () => {
-
         };
-    }, []);
+    }, [id]);
 
     return (
         <>
@@ -39,7 +41,7 @@ const GamePage = ({ players }) => {
                 <div className="joueur-liste">
                 <h5>Liste des participants :</h5>
                 {players.map((player, index) => (
-                    <div>
+                    <div key={index}>
                         <div>
                         <img src="../public/user.png" alt="" />
                         </div>
