@@ -2,7 +2,8 @@ import { useState } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
-
+import home from './component/home'
+import jeu from './component/jeu'
 import mainPage from './component/mainPage'
 
 import {
@@ -26,6 +27,9 @@ function App() {
           <Routes>
             <Route path="/" Component={mainPage} />
             <Route path='/caca' Component={caca} />
+            <Route path='/home' Component={home} />
+            <Route path='/jeu' Component={jeu} />
+            
           </Routes>
         </BrowserRouter>
       </>

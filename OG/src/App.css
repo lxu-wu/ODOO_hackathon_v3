@@ -5,11 +5,12 @@
   text-align: center;
 }
 body{
-  background-image: url(../public/background.jpeg);
+background-color: black;
 }
 .logo {
   height: 6em;
   padding: 1.5em;
+  margin-bottom: 20px;
   will-change: filter;
   transition: filter 300ms;
 }
@@ -19,20 +20,76 @@ body{
   margin-left: 30px;
   
 }
+#start{
+  height: 100px;
+}
+#div-code-partie{
+  padding-bottom: 30px;
+}
+#join-link{
+  background-color: #ffffff;
+ padding-left: 4%;
+ padding-right: 4%;
+  height: 36%;
+  opacity: 0.9;
+  margin-left: 30px;
+  border-radius: 20px;
+}
+#join-link button:hover{
+font-weight: bold;
+color: black;
+background-color: yellow;
+}
 .card{
-  background-color: #333333;
+  background-color: black;
   border-radius: 27px;
-  width: 50%;
+  width: 100vh;
+}
+#code-partie{
+  margin-right: 30px;
+  padding-bottom: 40px;
+  height: 50px;
+  border: none;
+  opacity: 0.7;
+  width: 30vh;
+  background-color: rgb(31, 27, 27);
+  border-radius: 5px;
+  padding: 2%;
+}
+.row{
+  display: flex;
+  justify-content: space-evenly;
 }
 #pseudo{
   margin-bottom: 40px;
   height: 50px;
   width: 100%;
-  border-radius: 7px;
+  border-radius: 10px;
+  outline: none;
+  border: none;
+  padding-left: 10px;
+  color: yellow;
+  font-weight: bold;
+  font-size: 20px;
+  background-color: #333333;
 }
-
+#tournoie-link{
+  background-color: black;
+  padding: 10%;
+  border-radius: 20px;
+}
+#tournoie-link  button{
+font-weight: bold;
+}
+#tournoie-link  button:hover{
+  background-color: yellow;
+  color: black;
+  font-weight: bold;
+}
 #join{
   margin-bottom: 30px;
+  font-weight: bold;
+  
 }
 .logo:hover {
   filter: drop-shadow(0 0 2em #646cffaa);
@@ -56,6 +113,9 @@ body{
   }
 }
 
+input{
+  outline: none;
+}
 .card {
   padding: 2em;
 }
@@ -63,3 +123,68 @@ body{
 .read-the-docs {
   color: #888;
 }
+
+.card2{
+  display: flex;
+}
+.column-home{
+  display: flex;
+  flex-direction: column;
+  width: 50vh;
+    height: 50vh;
+  background-color: yellow;}
+  .joueur-liste{
+    background-color: blue;
+    width: 33vh;
+    height: 50vh;
+  }
+  .elem1{
+    background-color: bisque;
+    width: 50vh;
+    height: 50vh;
+  }
+  .elem2{
+    background-color: blueviolet;
+    height: 50vh;
+  }
+  .card-jeu{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .column-jeu{
+    flex-direction: column;
+    justify-content: space-evenly;
+  
+  }
+  .column-jeu .row{
+    display: flex;
+    justify-content: space-evenly;
+    padding-bottom: 40px;
+  }
+  
+  img{
+    height: 77px; 
+  }
+  .tire-avion, .lance-papier, .monkyType, .helicochaise{
+    display: flex;
+    flex-direction: column;
+    color: #333333;
+    background-color: white;
+    border-radius: 7px;
+    font-weight: bold;
+    padding: 7%;
+  }
+  .monkyType{
+    padding: 9%;
+  }
+  .helicochaise{
+    padding: 9%;
+  }
+  .monkyType:hover, .lance-papier:hover, .helicochaise:hover, .tire-avion:hover{
+    opacity: 0.6;
+    cursor: pointer;
+  }
+  #groupe-logo{
+    opacity: 0.5;
+  }
