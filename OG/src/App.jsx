@@ -1,53 +1,81 @@
 import { useState, useEffect } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
 import './App.css'
 import config from './config.js';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import * as signalR from '@microsoft/signalr';
-import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
-import { SignalRProvider } from './SignalRContext';
-import { MainPage } from './component/MainPage.jsx';
-import { GamePage } from './component/GamePage.jsx';
+import MainPage from './component/MainPage.jsx';
+import GamePage from './component/GamePage.jsx';
+
+const EVENT_PARTY_CREATED = "PartyCreated";
+const EVENT_PARTY_JOINED = "PartyJoined";
 
 function App() {
 
   const [connection, setConnection] = useState(null);
+  const [players, setPlayers] = useState([]);
 
   useEffect(() => {
-    const newConnection = new signalR.HubConnectionBuilder()
-      .withUrl(config.baseUrl + '/hub')
-      .build();
+    const initializeConnection = async () => {
+      if (!connection) {
+        const newConnection = new signalR.HubConnectionBuilder()
+          .withUrl('http://10.30.90.94:5000' + '/hub')
+          .build();
 
-    setConnection(newConnection);
+        newConnection.on("ReceivePlayers", (receivedPlayers) => {
+          setPlayers(receivedPlayers);
+        });
 
-    newConnection.start()
-      .then(() => {
-        console.log('Connexion SignalR réussie');
-      })
-      .catch((error) => {
-        console.error('Erreur: ', error);
-      })
+        try {
+          await newConnection.start();
+          setConnection(newConnection);
+        } catch(error) {
+          console.error('Error starting connection: ', error);
+        }
+      }
+    }
+
+    initializeConnection();
 
     return () => {
-      newConnection.stop()
-        .then(() => {
-          console.log("Connexion signalR arrêtée");
-        })
-        .catch((error) => {
-          console.error("Erreur lors de l'arret de SignalR: ", error);
-        })
+      if (connection) {
+        connection.stop();
+      }
+    };
+  }, [connection])
+
+  const joinParty = async (nav, username) => {
+    connection.on(EVENT_PARTY_JOINED, (partyId) => {
+      console.log("Party joined: " + partyId);
+      nav("/" + partyId);
+    });
+
+    try {
+      await connection.invoke("JoinParty", username);
+    } catch (error) {
+      console.error('Error joining party:', error);
     }
-  }, []);
+  }
+
+  const createParty = async (nav, username) => {
+    connection.on(EVENT_PARTY_CREATED, (partyId) => {
+      console.log("Party created: " + partyId);
+      nav("/" + partyId);
+    });
+
+    try {
+      await connection.invoke("CreateParty", username);
+    } catch (error) {
+      console.error('Error creating party:', error);
+    }
+  }
 
   return (
-    <SignalRProvider connection={connection}>
-      <Router>
-        <Routes>
-          <Route path="/" element={<MainPage/>}/>
-          <Route path="/:id" element={<GamePage/>}/>
-        </Routes>
-      </Router>
-    </SignalRProvider>
+    <Router>
+      <Routes>
+        <Route path="/" element={<MainPage createParty={createParty} joinParty={joinParty} />}/>
+        <Route path="/:id" element={<GamePage players={players}/>}/>
+      </Routes>
+    </Router>
   )
 }
 

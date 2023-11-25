@@ -1,36 +1,22 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router";
-import { useSignalR } from "../SignalRContext";
 
-export function GamePage() {
+const GamePage = ({ players }) => {
     const { id } = useParams();
-    const [players, setPlayers] = useState([]);
-    const connection = useSignalR();
 
-    useEffect(() => {
-        if (connection) {
-            const handleReceivePlayers = (receivedPlayers) => {
-                receivedPlayers.forEach(element => {
-                    console.log(element);
-                })
-                setPlayers(receivedPlayers);
-            };
+    players.forEach(element => {
+        console.log("Item: " + element);
+    });
     
-            connection.on("ReceivePlayers", handleReceivePlayers);
-    
-            return () => {
-                connection.off("ReceivePlayers", handleReceivePlayers);
-            };
-        }
-    }, [])
-
     return (
-        <>
+        <div>
             <p>{id}</p>
             <h2>Liste des joueurs connectés :</h2>
             {players.map((player, index) => (
                 <p key={index}>{player.username}</p>
             ))}
-        </>
+        </div>
     );
 }
+
+export default GamePage;

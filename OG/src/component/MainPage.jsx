@@ -1,51 +1,36 @@
-import { useSignalR } from '../SignalRContext';
+import { HubConnectionBuilder, LogLevel } from '@microsoft/signalr'
 import { useNavigate } from 'react-router-dom'
 
-export function MainPage() {
+const MainPage = ({createParty, joinParty}) => {
 
-    const connection = useSignalR(); 
-    const navigate = useNavigate();
+    const nav = useNavigate();
 
-    const createParty = async () => {
-      if (connection) {
-        const username = document.getElementById("pseudo").value;
-
-        connection.on("PartyCreated", (partyId) => {
-          console.log(partyId);
-          navigate("/" + partyId);
-        });
-
-        connection.invoke("CreateParty", username);
-      }
+    const _joinParty = () => {
+      const username = document.getElementById("pseudo").value;
+      joinParty(nav, username);
     };
 
-    const joinParty = async () => {
-      if (connection) {
-        const username = document.getElementById("pseudo").value;
-
-        connection.on("PartyJoined", (partyId) => {
-          navigate("/" + partyId);
-        });
-
-        connection.invoke("JoinParty", username);
-      }
+    const _createParty = () => {
+      const username = document.getElementById("pseudo").value;
+      createParty(nav, username);
     };
 
     return (
-        <div className='card'> 
-          <div >
-              <img className='logo' src="../public/olymp-logo.jpg" alt="" />
-          </div>
-          <div>
-          
+      <div className='card'> 
+        <div >
+          <img className='logo' src="../public/olymp-logo.jpg" alt="" />
+        </div>
+        <div>
           <input type="text" placeholder='Pseudo' id='pseudo' />
-          </div>
-          <div>
-            <button onClick={joinParty}>Rejoindre</button>
-          </div>
-          <div>
-            <button onClick={createParty}>Creer un tournoi</button>
-          </div>
-        </div>  
+        </div>
+        <div>
+          <button onClick={_joinParty}>Rejoindre</button>
+        </div>
+        <div>
+          <button onClick={_createParty}>Creer un tournoi</button>
+        </div>
+      </div>  
     );
 }
+
+export default MainPage;
