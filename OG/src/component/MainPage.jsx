@@ -6,13 +6,15 @@ const MainPage = ({ createParty, joinParty }) => {
   const nav = useNavigate();
 
   const _joinParty = () => {
-    const username = document.getElementById("pseudo").value;
+    const username = document.getElementById("pseudo_join").value;
     const party_id = document.getElementById("code_party").value;
+
     joinParty(nav, party_id, username);
   };
 
   const _createParty = () => {
-    const username = document.getElementById("pseudo").value;
+    const username = document.getElementById("pseudo_create").value;
+
     createParty(nav, username);
   };
 
@@ -26,7 +28,7 @@ const MainPage = ({ createParty, joinParty }) => {
           <div id="join-link">
             <img src="../public/groupe.jpeg" alt="" id="groupe-logo" />
             <div>
-              <input type="text" placeholder='Pseudo' id='pseudo' />
+              <input type="text" placeholder='Pseudo' id='pseudo_join' className='pseudo'/>
             </div>
             <div>
               <input type="text" placeholder="Code de votre partie" id="code_party" /><div id="div-code-partie">
@@ -41,7 +43,7 @@ const MainPage = ({ createParty, joinParty }) => {
           <div id="tournoie-link">
             <img src="../public/start2.jpeg" alt="" id="start" />
 
-            <input type="text" placeholder='Pseudo' id='pseudo' />
+            <input type="text" placeholder='Pseudo' id='pseudo_create' className='pseudo'/>
 
             <div>
               <button id='join' onClick={_createParty}>Créer un Tournoi</button>

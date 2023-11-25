@@ -9,6 +9,9 @@ namespace Server.Hubs
 
         public async Task CreateParty(string username)
         {
+            if (string.IsNullOrEmpty(username))
+                return;
+
             await Console.Out.WriteLineAsync($"{username} creating a party...");
 
             //Recreate while it's unique
@@ -32,15 +35,22 @@ namespace Server.Hubs
             await Console.Out.WriteLineAsync($"{username} created a party ({partyId})");
         }
 
-        public async Task JoinParty(string username)
+        public async Task JoinParty(string partyId, string username)
         {
+            if (string.IsNullOrEmpty(username))
+                return;
+
+            if (!m_parties.TryGetValue(partyId, out Party? party))
+            {
+                await SendError("Party doesn't exists");
+                return;
+            }
+
             if (m_parties.Count == 0)
             {
                 await SendError("There is no party !");
                 return;
             }
-
-            var party = m_parties.Last().Value;
 
             await Console.Out.WriteLineAsync($"{username} try to join {party.Id}...");
 /*
@@ -89,7 +99,7 @@ namespace Server.Hubs
             await Clients.Caller.SendAsync("Error", errorMessage);
         }
 
-        private string CreateId()
+        private static string CreateId()
         {
             string s = string.Empty;
 
