@@ -7,30 +7,6 @@ import * as signalR from '@microsoft/signalr';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import { SignalRProvider } from './SignalRContext';
 
-function HomePage() {
-  return (
-    <>
-      <div>
-      
-      </div>
-      <div>
-        <div>
-          <img className='logo' src="../public/olymp-logo.jpg" alt="" />
-        </div>
-        <div>
-          <input type="text" placeholder='Pseudo' id='pseudo' />
-        </div>
-        <div>
-          <button id='join'>Rejoindre</button>
-
-          <button>Creer un tournoi</button>
-        </div>
-      </div>
-     
-    </>
-  );
-}
-
 function App() {
 
   const [connection, setConnection] = useState(null);
@@ -44,7 +20,7 @@ function App() {
 
     newConnection.start()
       .then(() => {
-        console.log('Connexion SignalR réussie');
+        console.log('Connexion SignalR r�ussie');
       })
       .catch((error) => {
         console.error('Erreur: ', error);
@@ -53,7 +29,7 @@ function App() {
     return () => {
       newConnection.stop()
         .then(() => {
-          console.log("Connexion signalR arrêtée");
+          console.log("Connexion signalR arr�t�e");
         })
         .catch((error) => {
           console.error("Erreur lors de l'arret de SignalR: ", error);
