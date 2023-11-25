@@ -38,6 +38,8 @@ const VideoRecorder = () => {
     if (mediaRecorderRef.current) {
       mediaRecorderRef.current.stop();
       setIsRecording(false);
+
+      videoRef.current.srcObject = null;
     }
   };
 
@@ -55,8 +57,8 @@ const VideoRecorder = () => {
           <>
             {recordedVideoURL ? (
               <>
-                <button onClick={resetRecording}>Record Again</button>
                 <video controls width="640" height="480" src={recordedVideoURL}></video>
+                <button onClick={resetRecording}>Record Again</button>
               </>
             ) : (
               <button onClick={startRecording}>Start Recording</button>

@@ -8,6 +8,7 @@ import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import { SignalRProvider } from './SignalRContext';
 import { MainPage } from './component/MainPage.jsx';
 import { GamePage } from './component/GamePage.jsx';
+import VideoRecorder from './component/VideoRecorder.jsx';
 
 function App() {
 
@@ -44,6 +45,7 @@ function App() {
       <Router>
         <Routes>
           <Route path="/" element={<MainPage/>}/>
+          <Route path="/video" element={<VideoRecorder/>}/>          
           <Route path="/:id" element={<GamePage/>}/>
         </Routes>
       </Router>
