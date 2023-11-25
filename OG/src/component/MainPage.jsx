@@ -1,7 +1,7 @@
 import { HubConnectionBuilder, LogLevel } from '@microsoft/signalr'
 import { useNavigate } from 'react-router-dom'
 
-const MainPage = ({ createParty, joinParty }) => {
+const MainPage = ({ setData, joinParty }) => {
 
   const nav = useNavigate();
 
@@ -14,6 +14,8 @@ const MainPage = ({ createParty, joinParty }) => {
 
   const choose_game = () => {
     const username = document.getElementById("pseudo_create").value;
+    setData({ username: {username} })
+
     nav("/choose-game");
   };
 

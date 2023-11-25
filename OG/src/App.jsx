@@ -13,8 +13,9 @@ import { NotFoundPage } from './component/NotFoundPage.jsx';
 
 function App() {
 
-  const [connection, setConnection] = useState(null);
   const [players, setPlayers] = useState([]);
+  const [data, setData] = useState({ username: "" });
+  const [connection, setConnection] = useState(null);
 
   useEffect(() => {
     const initializeConnection = async () => {
@@ -74,8 +75,8 @@ function App() {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<MainPage createParty={createParty} joinParty={joinParty} />}/>
-        <Route path="/choose-game" element={<ChooseGamePage />} />
+        <Route path="/" element={<MainPage joinParty={joinParty} setData={setData} />}/>
+        <Route path="/choose-game" element={<ChooseGamePage data={data} createParty={createParty}/>} />
         <Route path="/video" elementt={<VideoRecorder />}/>
         <Route path="/lobby/:id" element={<LobbyPage players={players}/>}/>
         <Route path="/404" element={<NotFoundPage/>}/>

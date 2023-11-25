@@ -1,13 +1,18 @@
-const ChooseGamePage = ( {nav, username} ) => {
+import { useNavigate } from "react-router";
 
-    const ChooseGame = ( { index } ) => {
-        nav("/")
+const ChooseGamePage = ( {createParty, data} ) => {
+
+    const nav = useNavigate();
+
+    const ChooseGame = ({ index }) => {
+        console.log(data.username.username);
+        createParty(nav, data.username.username);
     };
 
     return (
         <>
             <div className="card-jeu">
-                <h1 class='titre-card-jeu'>Choisissez votre jeu</h1>
+                <h1 className='titre-card-jeu'>Choisissez votre jeu</h1>
 
                 <div className="column-jeu">
                     <div className="row">
@@ -23,7 +28,7 @@ const ChooseGamePage = ( {nav, username} ) => {
                             <img src="../public/monkytype.jpeg" alt="" onClick={() => ChooseGame(2)}/>
                             Monky type</div> */}
                         <div className="helicochaise">
-                            <img src="../public/helico.jpeg" alt="" onClick={() => ChooseGame(3)}/>
+                            <img src="../public/helico.jpeg" alt="" onClick={() => ChooseGame(2)}/>
                             Helicochaise</div>
                     </div>
                 </div>
