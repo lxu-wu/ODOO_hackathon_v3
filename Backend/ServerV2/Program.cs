@@ -12,7 +12,7 @@ builder.Services.AddCors(options =>
             .AllowAnyMethod()
             .AllowAnyHeader()
             .AllowCredentials()
-            .WithOrigins("http://10.30.90.94:5173", "https://10.30.90.94:5001"));
+            .WithOrigins("http://10.30.90.94:5173"));
 });
 
 
@@ -20,11 +20,11 @@ builder.Services.AddSignalR();
 
 var app = builder.Build();
 
+
 // Configure the HTTP request pipeline.
 app.UseRouting();
 
 app.UseCors("MyPolicy");
-//app.UseCors("test");
 
 app.UseHttpsRedirection();
 

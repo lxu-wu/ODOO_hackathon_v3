@@ -42,7 +42,7 @@ function App() {
         connection.stop();
       }
     };
-  }, [connection])
+  }, [])
 
   const joinParty = async (nav, username) => {
     connection.on(EVENT_PARTY_JOINED, (partyId) => {

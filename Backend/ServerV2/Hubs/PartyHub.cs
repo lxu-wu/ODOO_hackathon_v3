@@ -25,9 +25,9 @@ namespace Server.Hubs
 
             m_parties.Add(partyId, party);
 
+            await Clients.Caller.SendAsync("PartyCreated", partyId);
             await Groups.AddToGroupAsync(Context.ConnectionId, partyId);
             await Clients.Group(party.Id).SendAsync("ReceivePlayers", party.Players);
-            await Clients.Caller.SendAsync("PartyCreated", partyId);
 
             await Console.Out.WriteLineAsync($"{username} created a party ({partyId})");
         }
@@ -64,12 +64,13 @@ namespace Server.Hubs
                 Username = username,
             });
 
-            //Notifying other users that a player joined the party
-            await Clients.Group(party.Id).SendAsync("ReceivePlayers", party.Players);
 
             //Adding to group and sending a response to inform him that it successfully joined the party
             await Clients.Caller.SendAsync("PartyJoined", party.Id);
+
+            //Notifying other users that a player joined the party
             await Groups.AddToGroupAsync(Context.ConnectionId, party.Id);
+            await Clients.Group(party.Id).SendAsync("ReceivePlayers", party.Players);
         }
 
         public override async Task OnConnectedAsync()
