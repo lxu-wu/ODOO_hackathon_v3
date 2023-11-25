@@ -1,3 +1,8 @@
 ﻿namespace Server.Models;
 
-public record class Player(string Username, bool IsAdmin);
+public class Player
+{
+    public bool IsAdmin { get; init; } = false;
+
+    public string Username { get; init; } = null!;
+}

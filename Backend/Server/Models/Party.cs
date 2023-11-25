@@ -1,7 +1,15 @@
 ﻿namespace Server.Models
 {
-    public record class Party(string Id)
+    public class Party
     {
-        public List<Player> Players { get; } = new();
+        public string Id { get; }
+
+        public List<Player> Players { get; }
+
+        public Party(string id)
+        {
+            Id = id;
+            Players = new List<Player>();
+        }
     }
 }
