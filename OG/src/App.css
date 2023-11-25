@@ -133,13 +133,17 @@ input{
   color: black;
   flex-direction: column;
   width: 50vh;
-    height: 50vh;
-  background-color: rgb(112, 112, 98);}
+  height: 50vh;
+  border-radius: 2%;
+  border-spacing: 15px 50px;
+  background-color: rgb(223, 223, 191);}
+  
   .joueur-liste{
     color: black;
-    background-color: rgba(0, 0, 255, 0.689);
+    background-color: rgb(223, 223, 191);
     width: 33vh;
     height: 50vh;
+    border-radius: 2%;
   }
   .elem1{
     background-color: bisque;
