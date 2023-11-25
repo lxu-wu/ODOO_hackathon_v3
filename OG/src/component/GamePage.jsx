@@ -13,7 +13,7 @@ const GamePage = ({ players }) => {
                 <div className="joueur-liste">
                 <h5>Liste des participants :</h5>
                 {players.map((player, index) => (
-                        <div className={index}>{player.username}</div>
+                        <div key={index}>{player.username}</div>
                     ))}
                 </div>
                 <div className="column-home">
