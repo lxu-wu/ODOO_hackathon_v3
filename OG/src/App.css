@@ -129,11 +129,13 @@ input{
 }
 .column-home{
   display: flex;
+  color: black;
   flex-direction: column;
   width: 50vh;
     height: 50vh;
   background-color: yellow;}
   .joueur-liste{
+    color: black;
     background-color: blue;
     width: 33vh;
     height: 50vh;
