@@ -1,4 +1,4 @@
-function mainPage() {
+export function MainPage() {
     return (
         <>
         
@@ -28,5 +28,3 @@ function mainPage() {
         </>
     );
 }
-
-export default mainPage;
