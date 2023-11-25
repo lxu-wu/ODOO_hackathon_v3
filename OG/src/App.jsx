@@ -73,7 +73,7 @@ function App() {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<MainPage joinParty={joinParty} create_party={createParty} />}/>
+        <Route path="/" element={<MainPage joinParty={joinParty} createParty={createParty} />}/>
         <Route path="/lobby/:id" element={<LobbyPage players={players}/>}/>
         <Route path="/404" element={<NotFoundPage/>}/>
         <Route path="*" element={<Navigate to="/" />} />
