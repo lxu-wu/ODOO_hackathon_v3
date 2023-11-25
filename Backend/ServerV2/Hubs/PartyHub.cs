@@ -5,7 +5,7 @@ namespace Server.Hubs
 {
     public class PartyHub : Hub
     {
-        private readonly Dictionary<string, Party> m_parties = new();
+        private static readonly Dictionary<string, Party> m_parties = new();
 
         public async Task CreateParty(string username)
         {
@@ -25,29 +25,38 @@ namespace Server.Hubs
 
             m_parties.Add(partyId, party);
 
-            await Clients.Caller.SendAsync("PartyCreated", partyId);
             await Groups.AddToGroupAsync(Context.ConnectionId, partyId);
+            await Clients.Group(party.Id).SendAsync("ReceivePlayers", party.Players);
+            await Clients.Caller.SendAsync("PartyCreated", partyId);
 
             await Console.Out.WriteLineAsync($"{username} created a party ({partyId})");
         }
 
-        public async Task JoinParty(string partyId, string username)
+        public async Task JoinParty(string username)
         {
-            await Console.Out.WriteLineAsync($"{username} try to join {partyId}...");
+            if (m_parties.Count == 0)
+            {
+                await SendError("There is no party !");
+                return;
+            }
 
+            var party = m_parties.Last().Value;
+
+            await Console.Out.WriteLineAsync($"{username} try to join {party.Id}...");
+/*
             if (!m_parties.TryGetValue(partyId, out var party))
             {
                 await SendError("Party doesn't exists.");
                 return;
             }
-
+*/
             if (party.Players.Any(x => x.Username == username))
             {
                 await SendError("Player with the same username exists.");
                 return;
             }
 
-            await Console.Out.WriteLineAsync($"{username} joined {partyId}.");
+            await Console.Out.WriteLineAsync($"{username} joined {party.Id}.");
 
             party.Players.Add(new Player
             {
@@ -56,11 +65,11 @@ namespace Server.Hubs
             });
 
             //Notifying other users that a player joined the party
-            await Clients.Group(partyId).SendAsync("Party_NewPlayerJoined");
+            await Clients.Group(party.Id).SendAsync("ReceivePlayers", party.Players);
 
             //Adding to group and sending a response to inform him that it successfully joined the party
-            await Clients.Caller.SendAsync("PartyJoined");
-            await Groups.AddToGroupAsync(Context.ConnectionId, partyId);
+            await Clients.Caller.SendAsync("PartyJoined", party.Id);
+            await Groups.AddToGroupAsync(Context.ConnectionId, party.Id);
         }
 
         public override async Task OnConnectedAsync()
@@ -81,7 +90,7 @@ namespace Server.Hubs
 
         private string CreateId()
         {
-            Span<char> span = stackalloc char[10];
+            string s = string.Empty;
 
             for (int i = 0; i < 10; i++)
             {
@@ -89,15 +98,15 @@ namespace Server.Hubs
                 switch (c)
                 {
                     case 0:
-                        span[i] = (char)Random.Shared.Next('A', 'Z' + 1);
+                        s += (char)Random.Shared.Next('A', 'Z' + 1);
                         break;
                     case 1:
-                        span[i] = (char)Random.Shared.Next(10);
+                        s += Random.Shared.Next(10);
                         break;
                 }
             }
 
-            return new string(span);
+            return s;
         }
     }
 }

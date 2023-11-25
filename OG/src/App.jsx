@@ -7,6 +7,7 @@ import * as signalR from '@microsoft/signalr';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import { SignalRProvider } from './SignalRContext';
 import { MainPage } from './component/MainPage.jsx';
+import { GamePage } from './component/GamePage.jsx';
 
 function App() {
 
@@ -43,6 +44,7 @@ function App() {
       <Router>
         <Routes>
           <Route path="/" element={<MainPage/>}/>
+          <Route path="/:id" element={<GamePage/>}/>
         </Routes>
       </Router>
     </SignalRProvider>
