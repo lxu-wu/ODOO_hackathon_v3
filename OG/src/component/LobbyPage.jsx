@@ -3,7 +3,7 @@ import { useParams } from "react-router";
 import config from "../config";
 import { useNavigate } from "react-router";
 
-const LobbyPage = ({ index, players }) => {
+const LobbyPage = ({ players }) => {
     const { id } = useParams();
 
     const nav = useNavigate();
@@ -42,9 +42,6 @@ const LobbyPage = ({ index, players }) => {
                 <h5>Liste des participants :</h5>
                 {players.map((player, index) => (
                     <div key={index}>
-                        <div>
-                        <img src="../public/user.png" alt="" />
-                        </div>
                         <div key={index}>{player.username}</div>
                     </div>                      
                     ))}

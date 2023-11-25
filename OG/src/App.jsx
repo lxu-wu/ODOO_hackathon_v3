@@ -4,12 +4,10 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-d
 import * as signalR from '@microsoft/signalr';
 import MainPage from './component/MainPage.jsx';
 import LobbyPage from './component/LobbyPage.jsx';
+import { NotFoundPage } from './component/NotFoundPage.jsx';
 
 const EVENT_PARTY_CREATED = "PartyCreated";
 const EVENT_PARTY_JOINED = "PartyJoined";
-import VideoRecorder from './component/VideoRecorder.jsx';
-import ChooseGamePage from './component/ChooseGamePage.jsx'
-import { NotFoundPage } from './component/NotFoundPage.jsx';
 
 function App() {
 
@@ -75,9 +73,7 @@ function App() {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<MainPage joinParty={joinParty} setData={setData} />}/>
-        <Route path="/choose-game" element={<ChooseGamePage data={data} createParty={createParty}/>} />
-        <Route path="/video" elementt={<VideoRecorder />}/>
+        <Route path="/" element={<MainPage joinParty={joinParty} create_party={createParty} />}/>
         <Route path="/lobby/:id" element={<LobbyPage players={players}/>}/>
         <Route path="/404" element={<NotFoundPage/>}/>
         <Route path="*" element={<Navigate to="/" />} />
