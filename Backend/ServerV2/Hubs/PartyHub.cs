@@ -119,5 +119,28 @@ namespace Server.Hubs
 
             return s;
         }
+
+        public async Task StartGame(string partyId)
+        {
+            if (m_parties.TryGetValue(partyId, out var party))
+            {
+                if (party.Players.Count < 2)
+                {
+                    // Envoyer un message d'erreur au client
+                    await Clients.Caller.SendAsync("SendError", "Vous devez être au moins deux joueurs pour démarrer le jeu.");
+                }
+                else
+                {
+                    // Exécuter la logique pour démarrer le jeu
+                    // ...
+                    await Clients.Group(partyId).SendAsync("GameStarted");
+                }
+            }
+            else
+            {
+                // La partie n'existe pas, gérer l'erreur appropriée
+                await Clients.Caller.SendAsync("SendError", "La partie spécifiée n'existe pas.");
+            }
+        }
     }
 }
