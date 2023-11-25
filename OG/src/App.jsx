@@ -8,6 +8,7 @@ import GamePage from './component/GamePage.jsx';
 
 const EVENT_PARTY_CREATED = "PartyCreated";
 const EVENT_PARTY_JOINED = "PartyJoined";
+import VideoRecorder from './component/VideoRecorder.jsx';
 
 function App() {
 
@@ -74,6 +75,7 @@ function App() {
       <Routes>
         <Route path="/" element={<MainPage createParty={createParty} joinParty={joinParty} />}/>
         <Route path="/:id" element={<GamePage players={players}/>}/>
+        <Route path="/video" elementt={<VideoRecorder />}/>
       </Routes>
     </Router>
   )
