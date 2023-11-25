@@ -12,7 +12,7 @@ builder.Services.AddCors(options =>
             .AllowAnyMethod()
             .AllowAnyHeader()
             .AllowCredentials()
-            .WithOrigins("http://10.30.90.94:5173"));
+            .WithOrigins("http://10.30.90.94:5173", "https://10.30.90.94:5001"));
 });
 
 
