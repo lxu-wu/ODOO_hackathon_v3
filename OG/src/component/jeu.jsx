@@ -1,4 +1,4 @@
-function jeu() {
+const ChooseGamePage = ( {nav, username} ) => {
     return (
         <>
             <div className="card-jeu">
@@ -27,4 +27,4 @@ function jeu() {
     )
 }
 
-export default jeu; 
+export default ChooseGamePage; 
