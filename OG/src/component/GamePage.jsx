@@ -39,7 +39,12 @@ const GamePage = ({ players }) => {
                 <div className="joueur-liste">
                 <h5>Liste des participants :</h5>
                 {players.map((player, index) => (
+                    <div>
+                        <div>
+                        <img src="../public/user.png" alt="" />
+                        </div>
                         <div key={index}>{player.username}</div>
+                    </div>                      
                     ))}
                 </div>
                 <div className="column-home">
