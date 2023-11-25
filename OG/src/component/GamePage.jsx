@@ -1,4 +1,3 @@
-import React, { useEffect, useState } from "react";
 import { useParams } from "react-router";
 
 const GamePage = ({ players }) => {
@@ -7,15 +6,18 @@ const GamePage = ({ players }) => {
     players.forEach(element => {
         console.log("Item: " + element);
     });
-    
+
     return (
-        <div>
-            <p>{id}</p>
-            <h2>Liste des joueurs connectés :</h2>
-            {players.map((player, index) => (
-                <p key={index}>{player.username}</p>
-            ))}
-        </div>
+        <>
+            <div className="card2">
+                <div className="joueur-liste">liste des participants</div>
+                <div className="column-home">
+                    {players.map((player, index) => (
+                        <div className={index}>{player.username}</div>
+                    ))}
+                </div>
+            </div>
+        </>
     );
 }
 

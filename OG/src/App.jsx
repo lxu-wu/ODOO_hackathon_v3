@@ -9,6 +9,8 @@ import GamePage from './component/GamePage.jsx';
 const EVENT_PARTY_CREATED = "PartyCreated";
 const EVENT_PARTY_JOINED = "PartyJoined";
 import VideoRecorder from './component/VideoRecorder.jsx';
+import home from './component/home'
+import jeu from './component/jeu'
 
 function App() {
 
@@ -44,8 +46,8 @@ function App() {
     };
   }, [])
 
-  const joinParty = async (nav, username) => {
-    connection.on(EVENT_PARTY_JOINED, (partyId) => {
+  const joinParty = async (nav, partyId, username) => {
+    connection.on(EVENT_PARTY_JOINED, (_) => {
       console.log("Party joined: " + partyId);
       nav("/" + partyId);
     });

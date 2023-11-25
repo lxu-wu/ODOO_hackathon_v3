@@ -8,31 +8,31 @@ const VideoRecorder = () => {
 
   const startRecording = () => {
     let chunks = [];
-  
+
     navigator.mediaDevices.getUserMedia({ video: true, audio: true })
       .then((stream) => {
         videoRef.current.srcObject = stream;
         mediaRecorderRef.current = new MediaRecorder(stream);
-  
+
         mediaRecorderRef.current.ondataavailable = (e) => {
           if (e.data.size > 0) {
             chunks.push(e.data);
           }
         };
-  
+
         mediaRecorderRef.current.onstop = () => {
           const blob = new Blob(chunks, { type: 'video/webm;codecs=vp8,opus' });
           const url = URL.createObjectURL(blob);
           setRecordedVideoURL(url);
           console.log(url);
         };
-  
+
         mediaRecorderRef.current.start();
         setIsRecording(true);
       })
       .catch((error) => console.error('Error accessing media devices:', error));
   };
-  
+
 
   const stopRecording = () => {
     if (mediaRecorderRef.current) {
