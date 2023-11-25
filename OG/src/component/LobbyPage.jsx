@@ -3,7 +3,7 @@ import { useParams } from "react-router";
 import config from "../config";
 import { useNavigate } from "react-router";
 
-const GamePage = ({ players }) => {
+const LobbyPage = ({ index, players }) => {
     const { id } = useParams();
 
     const nav = useNavigate();
@@ -57,4 +57,4 @@ const GamePage = ({ players }) => {
     );
 }
 
-export default GamePage;
+export default LobbyPage;
