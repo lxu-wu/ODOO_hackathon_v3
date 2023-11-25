@@ -5,7 +5,10 @@ namespace Server.Hubs
 {
     public class PartyHub : Hub
     {
-        private static readonly Dictionary<string, Party> m_parties = new();
+        private readonly Dictionary<string, Party> m_parties = new();
+
+        public PartyHub(Dictionary<string, Party> parties)
+            => m_parties = parties;
 
         public async Task CreateParty(string username)
         {
@@ -20,7 +23,7 @@ namespace Server.Hubs
                 partyId = CreateId();
 
             var party = new Party(partyId);
-            party.Players.Add(new Player
+            party.Players.Add(new Player(Context.ConnectionId)
             {
                 Username = username,
                 IsAdmin = true,
@@ -37,6 +40,8 @@ namespace Server.Hubs
 
         public async Task JoinParty(string partyId, string username)
         {
+            Console.WriteLine("Joining...");
+
             if (string.IsNullOrEmpty(username))
                 return;
 
@@ -68,7 +73,7 @@ namespace Server.Hubs
 
             await Console.Out.WriteLineAsync($"{username} joined {party.Id}.");
 
-            party.Players.Add(new Player
+            party.Players.Add(new Player(Context.ConnectionId)
             {
                 IsAdmin = false,
                 Username = username,
@@ -90,6 +95,21 @@ namespace Server.Hubs
 
         public async override Task OnDisconnectedAsync(Exception? exception)
         {
+            foreach (var party in m_parties.Values)
+            {
+                foreach (var player in party.Players.ToArray())
+                {
+                    if (player.Identifier == Context.ConnectionId)
+                    {
+                        await Console.Out.WriteLineAsync("Found to disconnect");
+                        party.Players.Remove(player);
+
+                        await Groups.RemoveFromGroupAsync(Context.ConnectionId, party.Id);
+                        await Clients.Group(party.Id).SendAsync("ReceivePlayers", party.Players);
+                    }
+                }
+            }
+
             await Console.Out.WriteLineAsync("Client disconnected");
         }
 

@@ -1,4 +1,5 @@
 using Server.Hubs;
+using Server.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -6,6 +7,7 @@ var builder = WebApplication.CreateBuilder(args);
 var urls = builder.Configuration.GetSection("Urls").Get<string[]>();
 builder.WebHost.UseUrls(urls!);
 
+builder.Services.AddSingleton<Dictionary<string, Party>>();
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("MyPolicy", builder => builder
@@ -15,14 +17,16 @@ builder.Services.AddCors(options =>
             .WithOrigins("http://10.30.90.94:5173"));
 });
 
-
 builder.Services.AddSignalR();
+
+builder.Services.AddControllers();
 
 var app = builder.Build();
 
-
 // Configure the HTTP request pipeline.
 app.UseRouting();
+
+app.MapControllers();
 
 app.UseCors("MyPolicy");
 

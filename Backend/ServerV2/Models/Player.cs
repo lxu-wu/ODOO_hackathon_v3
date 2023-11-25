@@ -2,7 +2,14 @@
 
 public class Player
 {
-    public bool IsAdmin { get; init; } = false;
+    public string Identifier { get; init; }
 
-    public string Username { get; init; } = null!;
+    public bool IsAdmin { get; set; } = false;
+
+    public string Username { get; set; } = null!;
+
+    public Player(string identifier)
+    {
+        Identifier = identifier;
+    }
 }
