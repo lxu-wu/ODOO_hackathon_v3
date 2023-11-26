@@ -2,11 +2,19 @@ import { useEffect } from "react";
 import { useParams } from "react-router";
 import config from "../config";
 import { useNavigate } from "react-router";
+import { useAdmin } from './AdminContext';
 
-const LobbyPage = ({ players }) => {
+const LobbyPage = ({ connection, players }) => {
     const { id } = useParams();
-
     const nav = useNavigate();
+
+    const StartGame = () => {
+        nav("/game");
+    };
+
+
+    const { isAdmin } = useAdmin(connection, id);
+    console.log(isAdmin);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -37,18 +45,17 @@ const LobbyPage = ({ players }) => {
 
     return (
         <>
-            <div className="card2">
+            <div className="lobby-card">
+                <h5 className="lobby-header">Liste des participants :</h5>
                 <div className="joueur-liste">
-                <h5>Liste des participants :</h5>
-                {players.map((player, index) => (
-                    <div key={index}>
-                        <div key={index}>{player.username}</div>
-                    </div>                      
+                    {players.map((player, index) => (
+                        <div key={index}>
+                            <div key={index}>{player.username}</div>
+                        </div>
                     ))}
                 </div>
-                <div className="column-home">
-                    
-                </div>
+                <h3>Code: {id}</h3>
+                <button className="lobby-start-btn" onClick={StartGame}>Start</button>
             </div>
         </>
     );

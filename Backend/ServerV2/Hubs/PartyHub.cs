@@ -38,6 +38,15 @@ namespace Server.Hubs
             await Console.Out.WriteLineAsync($"{username} created a party ({partyId})");
         }
 
+        public Task<bool> CheckAdminStatus(string partyId)
+        {
+            if (!m_parties.TryGetValue(partyId, out var party))
+                return Task.FromResult(false);
+
+            var player = party.Players.FirstOrDefault(x => x.Identifier == Context.ConnectionId);
+            return Task.FromResult(player != null && player.IsAdmin); 
+        }
+
         public async Task JoinParty(string partyId, string username)
         {
             Console.WriteLine("Joining...");
@@ -79,18 +88,12 @@ namespace Server.Hubs
                 Username = username,
             });
 
-
             //Adding to group and sending a response to inform him that it successfully joined the party
             await Clients.Caller.SendAsync("PartyJoined", party.Id);
 
             //Notifying other users that a player joined the party
             await Groups.AddToGroupAsync(Context.ConnectionId, party.Id);
             await Clients.Group(party.Id).SendAsync("ReceivePlayers", party.Players);
-        }
-
-        public override async Task OnConnectedAsync()
-        {
-            await Console.Out.WriteLineAsync("New client connected");
         }
 
         public async override Task OnDisconnectedAsync(Exception? exception)
@@ -110,7 +113,7 @@ namespace Server.Hubs
                 }
             }
 
-            await Console.Out.WriteLineAsync("Client disconnected");
+            await Console.Out.WriteLineAsync($"Client disconnected ({Context.ConnectionId})");
         }
 
         private async Task SendError(string errorMessage)
