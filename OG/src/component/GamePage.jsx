@@ -1,7 +1,15 @@
-const GamePage = () => {
+import { useParams } from "react-router";
+
+const GamePage = ( {messages} ) => {
+
+    const { id } = useParams();
+
     return (
         <div>
-            <h1>Game Page !</h1>
+            <MessageContainer key={0} msg={"Hello world"}/>
+            {messages.map((msg, index) => (
+                <MessageContainer key={index} msg={msg}/>
+            ))}
         </div>
     );
 }

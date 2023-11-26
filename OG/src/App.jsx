@@ -20,8 +20,7 @@ function App() {
     const initializeConnection = async () => {
       if (!connection) {
         const newConnection = new signalR.HubConnectionBuilder()
-          //.withUrl('http://10.30.90.94:5000' + '/hub')
-          .withUrl('http://localhost:5000/hub')
+          .withUrl('http://10.30.90.94:5000/hub')
           .withAutomaticReconnect()
           .build();
 
@@ -83,7 +82,7 @@ function App() {
         <Route path="/" element={<MainPage joinParty={joinParty} createParty={createParty} />}/>
         <Route path="/video" element={<VideoRecorderPage />}/>
         <Route path="/lobby/:id" element={<LobbyPage connection={connection} players={players}/>}/>
-        <Route path="/game" element={<GamePage />}/>
+        <Route path="/game/:id" element={<GamePage />}/>
         <Route path="/404" element={<NotFoundPage/>}/>
         <Route path="*" element={<Navigate to="/" />} />
       </Routes>
