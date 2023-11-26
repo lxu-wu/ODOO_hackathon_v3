@@ -25,7 +25,7 @@ const MainPage = ({ joinParty, createParty }) => {
         </div>
         <div className="row">
           <div id="join-link">
-            <img src="../public/groupe.jpeg" alt="" id="groupe-logo" />
+            <img src="../public/ekip7.png" alt="" id="groupe-logo" />
             <div>
               <input type="text" placeholder='Pseudo' id='pseudo_join' className='pseudo'/>
             </div>
