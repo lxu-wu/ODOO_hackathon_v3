@@ -1,4 +1,5 @@
 import { useParams } from "react-router";
+import { MessageContainer } from "./MessageContainer";
 
 const GamePage = ( {messages} ) => {
 

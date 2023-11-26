@@ -38,6 +38,14 @@ namespace Server.Hubs
             await Console.Out.WriteLineAsync($"{username} created a party ({partyId})");
         }
 
+        public async Task StartParty(string partyId)
+        {
+            if (!await CheckAdminStatus(partyId))
+                return;
+
+            await Clients.Group(partyId).SendAsync("GameStarted");
+        }
+
         public Task<bool> CheckAdminStatus(string partyId)
         {
             if (!m_parties.TryGetValue(partyId, out var party))

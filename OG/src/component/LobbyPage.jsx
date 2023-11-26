@@ -9,14 +9,8 @@ const LobbyPage = ({ connection, players }) => {
     const nav = useNavigate();
 
     const StartGame = () => {
-        connection.on("GameStarted", () => {
-            nav("/game/" + id);
-        });
-
-        connection.invoke("StartParty", id);
+        nav("/video");
     };
-
-    
 
     const { isAdmin } = useAdmin(connection, id);
     console.log(isAdmin);

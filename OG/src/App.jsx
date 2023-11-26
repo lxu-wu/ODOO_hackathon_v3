@@ -14,6 +14,7 @@ const EVENT_PARTY_JOINED = "PartyJoined";
 function App() {
 
   const [players, setPlayers] = useState([]);
+  const [messages, setMessages] = useState([]);
   const [connection, setConnection] = useState(null);
 
   useEffect(() => {
@@ -82,7 +83,7 @@ function App() {
         <Route path="/" element={<MainPage joinParty={joinParty} createParty={createParty} />}/>
         <Route path="/video" element={<VideoRecorderPage />}/>
         <Route path="/lobby/:id" element={<LobbyPage connection={connection} players={players}/>}/>
-        <Route path="/game/:id" element={<GamePage />}/>
+        <Route path="/game/:id" element={<GamePage messages={messages} />}/>
         <Route path="/404" element={<NotFoundPage/>}/>
         <Route path="*" element={<Navigate to="/" />} />
       </Routes>
